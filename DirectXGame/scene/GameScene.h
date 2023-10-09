@@ -9,7 +9,9 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "Player.h"
+#include "DebugCamera.h"
 #include <memory>
+#include "Skydome.h"
 
 /// <summary>
 /// ゲームシーン
@@ -58,6 +60,15 @@ private: // メンバ変数
 
 	//自キャラ
 	std::unique_ptr<Player> player_;
+
+	//3Dモデル
+	std::unique_ptr<Model> modelSkydome_ = nullptr;
+	//天球
+	std::unique_ptr<Skydome> skydome_;
+
+	//デバックカメラ
+	std::unique_ptr<DebugCamera> debugCamera_;
+	int isDebugCameraActive_;
 
 	/// <summary>
 	/// ゲームシーン用
