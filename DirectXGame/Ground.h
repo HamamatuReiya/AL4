@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include "Model.h"
+#include "WorldTransform.h"
 
 /// <summary>
 /// 地面
