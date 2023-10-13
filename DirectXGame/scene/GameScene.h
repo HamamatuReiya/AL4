@@ -12,6 +12,7 @@
 #include "DebugCamera.h"
 #include <memory>
 #include "Skydome.h"
+#include "Ground.h"
 
 /// <summary>
 /// ゲームシーン
@@ -58,6 +59,9 @@ private: // メンバ変数
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
 
+	//3Dモデル
+	std::unique_ptr<Model> modelPlayer_ = nullptr;
+
 	//自キャラ
 	std::unique_ptr<Player> player_;
 
@@ -65,6 +69,11 @@ private: // メンバ変数
 	std::unique_ptr<Model> modelSkydome_ = nullptr;
 	//天球
 	std::unique_ptr<Skydome> skydome_;
+
+	//3Dモデル
+	std::unique_ptr<Model> modelGround_ = nullptr;
+	//地面
+	std::unique_ptr<Ground> ground_;
 
 	//デバックカメラ
 	std::unique_ptr<DebugCamera> debugCamera_;

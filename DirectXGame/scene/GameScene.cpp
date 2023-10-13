@@ -22,18 +22,20 @@ void GameScene::Initialize() {
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 
-	////軸方向表示の表示を有効にする
-	//AxisIndicator::GetInstance()->SetVisible(true);
-	////軸方向表示が参照するビュープロジェクションを指定する
-	//AxisIndicator::GetInstance()->SetTargetViewProjection(&debugCamera_->GetViewProjection());
-
 	//デバックカメラの生成
 	debugCamera_ = std::make_unique<DebugCamera>(1280,720);
 
+	//軸方向表示の表示を有効にする
+	AxisIndicator::GetInstance()->SetVisible(true);
+	//軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
+	AxisIndicator::GetInstance()->SetTargetViewProjection(&debugCamera_->GetViewProjection());
+
 	//自キャラの生成
 	player_ = std::make_unique<Player>();
+	//3Dモデルの生成
+	modelPlayer_.reset(Model::CreateFromOBJ("player", true));
 	//自キャラの初期化
-	player_->Initialize(model_.get(), textureHandle_);
+	player_->Initialize(modelPlayer_.get());
 
 	//天球の生成
 	skydome_ = std::make_unique<Skydome>();
@@ -41,10 +43,17 @@ void GameScene::Initialize() {
 	modelSkydome_.reset(Model::CreateFromOBJ("skydome", true));
 	//天球の初期化
 	skydome_->Initialize(modelSkydome_.get());
+
+	//地面の生成
+	ground_ = std::make_unique<Ground>();
+	//3Dモデルの生成
+	modelGround_.reset(Model::CreateFromOBJ("ground", true));
+	//地面の初期化
+	ground_->Initialize(modelGround_.get());
 }
 
 void GameScene::Update() {
-	player_->Update();
+	debugCamera_->Update();
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_C)) {
 		isDebugCameraActive_ = true;
@@ -88,6 +97,7 @@ void GameScene::Draw() {
 	//model_->Draw(worldTransform_, viewProjection_, textureHandle_);
 	player_->Draw(viewProjection_);
 	skydome_->Draw(viewProjection_);
+	ground_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
