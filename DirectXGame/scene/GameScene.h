@@ -61,7 +61,6 @@ private: // メンバ変数
 
 	//3Dモデル
 	std::unique_ptr<Model> modelPlayer_ = nullptr;
-
 	//自キャラ
 	std::unique_ptr<Player> player_;
 
