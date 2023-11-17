@@ -25,6 +25,11 @@ void GameScene::Initialize() {
 	//デバックカメラの生成
 	debugCamera_ = std::make_unique<DebugCamera>(1280,720);
 
+	//追従カメラの生成
+	followCamera_ = std::make_unique<FollowCamera>();
+	//追従カメラの初期化
+	followCamera_->Initialize();
+
 	//軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
 	//軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
@@ -34,6 +39,9 @@ void GameScene::Initialize() {
 	player_ = std::make_unique<Player>();
 	//3Dモデルの生成
 	modelPlayer_.reset(Model::CreateFromOBJ("player", true));
+	//自キャラのワールドトランスフォームを追従カメラにセット
+	followCamera_->SetTarget(&player_->GetWorldTransform());
+	player_->SetViewProjection(&followCamera_->GetViewProjection());
 	//自キャラの初期化
 	player_->Initialize(modelPlayer_.get());
 
@@ -50,10 +58,18 @@ void GameScene::Initialize() {
 	modelGround_.reset(Model::CreateFromOBJ("ground", true));
 	//地面の初期化
 	ground_->Initialize(modelGround_.get());
+
+
 }
 
 void GameScene::Update() {
+	player_->Update();
 	debugCamera_->Update();
+	followCamera_->Update();
+
+	viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
+	viewProjection_.matView = followCamera_->GetViewProjection().matView;
+
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_C)) {
 		isDebugCameraActive_ = true;
@@ -64,6 +80,8 @@ void GameScene::Update() {
 	if (isDebugCameraActive_) {
 		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
 		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
+		viewProjection_.TransferMatrix();
+	} else {
 		viewProjection_.TransferMatrix();
 	}
 }
