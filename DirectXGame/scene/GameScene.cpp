@@ -38,12 +38,20 @@ void GameScene::Initialize() {
 	//自キャラの生成
 	player_ = std::make_unique<Player>();
 	//3Dモデルの生成
-	modelPlayer_.reset(Model::CreateFromOBJ("player", true));
+	modelFighterBody_.reset(Model::CreateFromOBJ("float_Body", true));
+	// 3Dモデルの生成
+	modelFighterHead_.reset(Model::CreateFromOBJ("float_Head", true));
+	// 3Dモデルの生成
+	modelFighterL_arm_.reset(Model::CreateFromOBJ("float_L_arm", true));
+	// 3Dモデルの生成
+	modelFighterR_arm_.reset(Model::CreateFromOBJ("float_R_arm", true));
 	//自キャラのワールドトランスフォームを追従カメラにセット
 	followCamera_->SetTarget(&player_->GetWorldTransform());
 	player_->SetViewProjection(&followCamera_->GetViewProjection());
 	//自キャラの初期化
-	player_->Initialize(modelPlayer_.get());
+	player_->Initialize(
+	    modelFighterBody_.get(), modelFighterHead_.get(), modelFighterL_arm_.get(),
+	    modelFighterR_arm_.get());
 
 	//天球の生成
 	skydome_ = std::make_unique<Skydome>();
