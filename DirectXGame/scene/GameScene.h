@@ -9,6 +9,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "DebugCamera.h"
 #include <memory>
 #include "Skydome.h"
@@ -65,6 +66,11 @@ private: // メンバ変数
 	//自キャラ
 	std::unique_ptr<Player> player_;
 
+	// 3Dモデル
+	std::unique_ptr<Model> modelEnemy_ = nullptr;
+	// 敵
+	std::unique_ptr<Enemy> enemy_;
+
 	//3Dモデル
 	std::unique_ptr<Model> modelSkydome_ = nullptr;
 	//天球
@@ -87,6 +93,10 @@ private: // メンバ変数
 	std::unique_ptr<Model> modelFighterHead_;
 	std::unique_ptr<Model> modelFighterL_arm_;
 	std::unique_ptr<Model> modelFighterR_arm_;
+
+	std::unique_ptr<Model> modelEnemyBody_;
+	std::unique_ptr<Model> modelEnemyL_arm_;
+	std::unique_ptr<Model> modelEnemyR_arm_;
 
 	/// <summary>
 	/// ゲームシーン用

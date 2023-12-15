@@ -3,28 +3,29 @@
 
 
 
-void Player::Initialize(Model* modelBody, Model* modelHead, Model* modelL_arm, Model* modelR_arm) 
-{
-	modelFighterBody_ = modelBody;
-	modelFighterHead_ = modelHead;
-	modelFighterL_arm_ = modelL_arm;
-	modelFighterR_arm_ = modelR_arm;
+void Player::Initialize(const std::vector<Model*>& models) {
+	BaseCharacter::Initialize(models);
+
 	worldTransform_.Initialize();
 	worldTransform_.scale_ = {1.0f, 1.0f, 1.0f};
 	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
 	worldTransform_.translation_ = {0.0f, 0.0f, 0.0f};
+
 	worldTransformBody_.Initialize();
 	worldTransformBody_.scale_ = {1.0f, 1.0f, 1.0f};
 	worldTransformBody_.rotation_ = {0.0f, 0.0f, 0.0f};
 	worldTransformBody_.translation_ = {0.0f, 0.0f, 0.0f};
+
 	worldTransformHead_.Initialize();
 	worldTransformHead_.scale_ = {1.0f, 1.0f, 1.0f};
 	worldTransformHead_.rotation_ = {0.0f, 0.0f, 0.0f};
 	worldTransformHead_.translation_ = {0.0f, 1.5f, 0.0f};
+
 	worldTransformL_arm_.Initialize();
 	worldTransformL_arm_.scale_ = {1.0f, 1.0f, 1.0f};
 	worldTransformL_arm_.rotation_ = {0.0f, 0.0f, 0.0f};
 	worldTransformL_arm_.translation_ = {-0.5f, 1.25f, 0.0f};
+
 	worldTransformR_arm_.Initialize();
 	worldTransformR_arm_.scale_ = {1.0f, 1.0f, 1.0f};
 	worldTransformR_arm_.rotation_ = {0.0f, 0.0f, 0.0f};
@@ -33,6 +34,8 @@ void Player::Initialize(Model* modelBody, Model* modelHead, Model* modelL_arm, M
 
 void Player::Update() 
 { 
+	BaseCharacter::Update();
+
 	XINPUT_STATE joyState;
 
 	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
@@ -73,12 +76,13 @@ void Player::Update()
 	worldTransformR_arm_.UpdateMatrix();
 }
 
-void Player::Draw(ViewProjection& viewProjection) {
+void Player::Draw(const ViewProjection& viewProjection) {
 
-	modelFighterBody_->Draw(worldTransformBody_, viewProjection);
-	modelFighterHead_->Draw(worldTransformHead_, viewProjection);
-	modelFighterL_arm_->Draw(worldTransformL_arm_, viewProjection);
-	modelFighterR_arm_->Draw(worldTransformR_arm_, viewProjection);
+	// 3Dモデル描画
+	models_[0]->Draw(worldTransformBody_, viewProjection);
+	models_[1]->Draw(worldTransformHead_, viewProjection);
+	models_[2]->Draw(worldTransformL_arm_, viewProjection);
+	models_[3]->Draw(worldTransformR_arm_, viewProjection);
 
 }
 

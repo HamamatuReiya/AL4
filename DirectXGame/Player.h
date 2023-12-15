@@ -5,31 +5,31 @@
 #include "MatrixMath.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include "BaseCharacter.h"
 
 
 /// <summary>
 /// 自キャラ
 /// </summary>
-class Player 
+class Player : public BaseCharacter
 {
 public:
 	/// <summary>
 	/// 初期化
-	/// </summary>
-	/// <param name="model">モデル</param>
-	/// <param name="textureHandle">テクスチャハンドル</param>
-	void Initialize(Model* modelBody, Model* modelHead, Model* modelL_arm, Model* modelR_arm);
+	///  </summary>
+	/// <param name="models_">モデルデータ配列</param>
+	void Initialize(const std::vector<Model*>& models) override;
 
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update();
+	void Update()override;
 
 	/// <summary>
 	/// 描画
 	/// </summary>
 	/// <param name="viewProjection">ビュープロジェクション(参照渡し)</param>
-	void Draw(ViewProjection& viewProjection);
+	void Draw(const ViewProjection& viewProjection) override;
 
 	WorldTransform& GetWorldTransform() { return worldTransform_; };
 
