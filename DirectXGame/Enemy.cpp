@@ -32,7 +32,7 @@ void Enemy::Update() {
 	
 	worldTransform_.translation_ = Add(worldTransform_.translation_, move);
 
-	worldTransform_.rotation_.y += 0.5f;
+	worldTransform_.rotation_.y += 0.1f;
 
 	worldTransformBody_.parent_ = &worldTransform_;
 	worldTransformL_arm_.parent_ = &worldTransform_;

@@ -45,13 +45,15 @@ void GameScene::Initialize() {
 	modelFighterL_arm_.reset(Model::CreateFromOBJ("float_L_arm", true));
 	// 3Dモデルの生成
 	modelFighterR_arm_.reset(Model::CreateFromOBJ("float_R_arm", true));
+	// 3Dモデルの生成
+	modelHammer_.reset(Model::CreateFromOBJ("hammer", true));
 	//自キャラのワールドトランスフォームを追従カメラにセット
 	followCamera_->SetTarget(&player_->GetWorldTransform());
 	player_->SetViewProjection(&followCamera_->GetViewProjection());
 	// 自キャラモデル
 	std::vector<Model*> playerModels_ = {
 	    modelFighterBody_.get(), modelFighterHead_.get(), modelFighterL_arm_.get(),
-	    modelFighterR_arm_.get()};
+	    modelFighterR_arm_.get(), modelHammer_.get()};
 	// 自キャラ初期化
 	player_->Initialize(playerModels_);
 

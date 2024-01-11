@@ -6,7 +6,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "BaseCharacter.h"
-
+#include <optional>
 
 /// <summary>
 /// 自キャラ
@@ -42,6 +42,7 @@ public:
 	//浮遊ギミック更新
 	void UpdateFloatingGimmick();
 
+	
 private:
 	//ワールド座標データ
 	WorldTransform worldTransform_;
@@ -49,6 +50,7 @@ private:
 	WorldTransform worldTransformHead_;
 	WorldTransform worldTransformL_arm_;
 	WorldTransform worldTransformR_arm_;
+	WorldTransform worldTransformHammer_;
 	//モデル
 	Model* model_ = nullptr;
 	//カメラのビュープロジェクション
@@ -59,7 +61,36 @@ private:
 	Model* modelFighterHead_;
 	Model* modelFighterL_arm_;
 	Model* modelFighterR_arm_;
+	Model* modelFighterHammer_;
 
 	//浮遊ギミックの媒介変数
 	float floatingParameter_ = 0.0f;
+
+	// 通常行動初期化
+	void BehaviorRootInitialize();
+	// 通常行動更新
+	void BehaviorRootUpdate();
+
+	// 攻撃行動初期化
+	void BehaviorAttackInitialize();
+	// 攻撃行動更新
+	void BehaviorAttackUpdate();
+
+	enum class Behavior {
+		kRoot,   // 通常状態
+		kAttack, // 攻撃中
+	};
+
+	// 振るまい
+	Behavior behavior_ = Behavior::kRoot;
+
+	// 次のふるまいのリクエスト
+	std::optional<Behavior> behaviorRequest_ = std::nullopt;
+
+	//攻撃時間
+	float attackTime;
+
+	bool isHammerDraw_;
+	bool isHammerSet_;
+	float stanbyTime;
 };
