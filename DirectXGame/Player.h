@@ -42,6 +42,11 @@ public:
 	//浮遊ギミック更新
 	void UpdateFloatingGimmick();
 
+	// ワールド座標を取得
+	Vector3 GetWorldPosition();
+
+	void RoopInitialize();
+
 	
 private:
 	//ワールド座標データ

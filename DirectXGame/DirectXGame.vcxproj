@@ -110,6 +110,7 @@
     <ClCompile Include="BaseCharacter.cpp" />
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="Clear.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="Ground.cpp" />
@@ -118,6 +119,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="Skydome.cpp" />
+    <ClCompile Include="Title.cpp" />
     <ClCompile Include="WorldTransformEx.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +147,7 @@
     <ClInclude Include="base\StringUtility.h" />
     <ClInclude Include="base\TextureManager.h" />
     <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="Clear.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="Ground.h" />
@@ -156,8 +159,10 @@
     <ClInclude Include="MatrixMath.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="Skydome.h" />
+    <ClInclude Include="Title.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\TerrainPS.hlsl">

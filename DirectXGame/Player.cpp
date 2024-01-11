@@ -9,7 +9,7 @@ void Player::Initialize(const std::vector<Model*>& models) {
 	worldTransform_.Initialize();
 	worldTransform_.scale_ = {1.0f, 1.0f, 1.0f};
 	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
-	worldTransform_.translation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_.translation_ = {0.0f, 0.0f, -20.0f};
 
 	worldTransformBody_.Initialize();
 	worldTransformBody_.scale_ = {1.0f, 1.0f, 1.0f};
@@ -120,6 +120,22 @@ void Player::UpdateFloatingGimmick()
 	worldTransform_.translation_.y = std::sin(floatingParameter_) * floating;
 }
 
+Vector3 Player::GetWorldPosition() {
+	Vector3 worldPos;
+
+	worldPos.x = worldTransform_.matWorld_.m[3][0];
+	worldPos.y = worldTransform_.matWorld_.m[3][1];
+	worldPos.z = worldTransform_.matWorld_.m[3][2];
+
+	return worldPos;
+}
+
+void Player::RoopInitialize() { 
+	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_.translation_ = {0.0f, 0.0f, -20.0f};
+	
+}
+
 void Player::BehaviorRootInitialize() { 
 	isHammerDraw_ = false;
 	worldTransformL_arm_.rotation_ = {0.0f, 0.0f, 0.0f};
@@ -150,10 +166,10 @@ void Player::BehaviorRootUpdate() {
 			worldTransform_.rotation_.y = std::atan2(move.x, move.z);
 		}
 
-		if (joyState.Gamepad.wButtons == XINPUT_GAMEPAD_A) {
+		/*if (joyState.Gamepad.wButtons == XINPUT_GAMEPAD_X) {
 			attackTime = 120.0f;
 			behaviorRequest_ = Behavior::kAttack;
-		}
+		}*/
 	}
 
 	
@@ -169,7 +185,7 @@ void Player::BehaviorAttackUpdate() {
 	worldTransformR_arm_.rotation_.x = worldTransformHammer_.rotation_.x + 3.08f;
 	if (isHammerSet_ == false) {
 		if (worldTransformHammer_.rotation_.x >= -0.4f) {
-			worldTransformHammer_.rotation_.x -= 0.05f;
+			worldTransformHammer_.rotation_.x -= 0.4f;
 		}
 		if (worldTransformHammer_.rotation_.x <= -0.4f) {
 			worldTransformHammer_.rotation_.x = -0.4f;
@@ -181,7 +197,7 @@ void Player::BehaviorAttackUpdate() {
 		}
 	} else if (isHammerSet_ == true) {
 		if (worldTransformHammer_.rotation_.x <= 1.6f) {
-			worldTransformHammer_.rotation_.x += 0.1f;
+			worldTransformHammer_.rotation_.x += 1.0f;
 		}
 		if (worldTransformHammer_.rotation_.x >= 1.6f) {
 			worldTransformHammer_.rotation_.x = 1.6f;

@@ -15,6 +15,7 @@
 #include "Skydome.h"
 #include "Ground.h"
 #include "FollowCamera.h"
+#include "Scene.h"
 
 /// <summary>
 /// ゲームシーン
@@ -47,6 +48,13 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	void CheckAllCollisions();
+
+	bool IsSceneEnd() { return isSceneEnd; }
+	SceneType NextScene() { return SceneType::kGameClear; }
+
+	void RoopInitialize();
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -66,6 +74,8 @@ private: // メンバ変数
 	//自キャラ
 	std::unique_ptr<Player> player_;
 
+	// 敵リスト
+	std::list<Enemy*> enemys_;
 	// 3Dモデル
 	std::unique_ptr<Model> modelEnemy_ = nullptr;
 	// 敵
@@ -98,6 +108,8 @@ private: // メンバ変数
 	std::unique_ptr<Model> modelEnemyBody_;
 	std::unique_ptr<Model> modelEnemyL_arm_;
 	std::unique_ptr<Model> modelEnemyR_arm_;
+
+	bool isSceneEnd = false;
 
 	/// <summary>
 	/// ゲームシーン用

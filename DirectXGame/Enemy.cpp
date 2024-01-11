@@ -27,12 +27,12 @@ void Enemy::Initialize(const std::vector<Model*>& models) {
 void Enemy::Update() {
 	BaseCharacter::Update();
 
-	Vector3 move = {0.0f, 0.0f, 0.5f};
+	Vector3 move = {0.0f, 0.0f, 1.5f};
 	move = TransformNormal(move, worldTransform_.matWorld_);
 	
 	worldTransform_.translation_ = Add(worldTransform_.translation_, move);
 
-	worldTransform_.rotation_.y += 0.1f;
+	worldTransform_.rotation_.y += 0.02f;
 
 	worldTransformBody_.parent_ = &worldTransform_;
 	worldTransformL_arm_.parent_ = &worldTransform_;
@@ -52,4 +52,19 @@ void Enemy::Draw(const ViewProjection& viewProjection) {
 	models_[0]->Draw(worldTransformBody_, viewProjection);
 	models_[1]->Draw(worldTransformL_arm_, viewProjection);
 	models_[2]->Draw(worldTransformR_arm_, viewProjection);
+}
+
+Vector3 Enemy::GetWorldPosition() {
+	Vector3 worldPos;
+
+	worldPos.x = worldTransform_.matWorld_.m[3][0];
+	worldPos.y = worldTransform_.matWorld_.m[3][1];
+	worldPos.z = worldTransform_.matWorld_.m[3][2];
+
+	return worldPos;
+}
+
+void Enemy::RoopInitialize() {
+	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_.translation_ = {0.0f, 0.0f, 5.0f};
 }

@@ -23,6 +23,11 @@ public:
 	/// <param name="viewProjection">ビュープロジェクション(参照渡し)</param>
 	void Draw(const ViewProjection& viewProjection) override;
 
+	// ワールド座標を取得
+	Vector3 GetWorldPosition();
+
+	void RoopInitialize();
+
 private:
 	// ワールド座標データ
 	WorldTransform worldTransform_;

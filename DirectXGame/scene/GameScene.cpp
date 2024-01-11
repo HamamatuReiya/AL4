@@ -30,10 +30,10 @@ void GameScene::Initialize() {
 	//追従カメラの初期化
 	followCamera_->Initialize();
 
-	//軸方向表示の表示を有効にする
-	AxisIndicator::GetInstance()->SetVisible(true);
-	//軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
-	AxisIndicator::GetInstance()->SetTargetViewProjection(&debugCamera_->GetViewProjection());
+	////軸方向表示の表示を有効にする
+	//AxisIndicator::GetInstance()->SetVisible(true);
+	////軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
+	//AxisIndicator::GetInstance()->SetTargetViewProjection(&debugCamera_->GetViewProjection());
 
 	//自キャラの生成
 	player_ = std::make_unique<Player>();
@@ -94,6 +94,7 @@ void GameScene::Update() {
 	enemy_->Update();
 	debugCamera_->Update();
 	followCamera_->Update();
+	CheckAllCollisions();
 
 	viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
 	viewProjection_.matView = followCamera_->GetViewProjection().matView;
@@ -162,4 +163,47 @@ void GameScene::Draw() {
 	Sprite::PostDraw();
 
 #pragma endregion
+}
+
+void GameScene::CheckAllCollisions() { 
+	// 判定対象AとBの座標
+	Vector3 posA, posB;
+
+	// 2間点の距離
+	float posAB;
+
+	// 自キャラの半径
+	float playerRadius = 1.5f;
+
+	// 敵弾の半径
+	float enemyBulletRadius = 1.5f;
+
+	#pragma region 自キャラと敵の当たり判定
+	posA = player_->GetWorldPosition();
+
+	// 敵のワールド座標を取得
+	posB = enemy_->GetWorldPosition();
+
+	// AとBの距離を求める
+	posAB = (posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y) +
+	        (posB.z - posA.z) * (posB.z - posA.z);
+
+	// 球と球との当たり判定
+	if (posAB <= (playerRadius + enemyBulletRadius) * (playerRadius + enemyBulletRadius)) {
+		isSceneEnd = true;
+	}
+
+	#pragma endregion
+
+	#pragma region
+
+#pragma endregion
+
+
+}
+
+void GameScene::RoopInitialize() { 
+	player_->RoopInitialize();
+	enemy_->RoopInitialize();
+	isSceneEnd = false;
 }

@@ -6,6 +6,8 @@
 #include "PrimitiveDrawer.h"
 #include "TextureManager.h"
 #include "WinApp.h"
+#include "Title.h"
+#include "Clear.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -17,6 +19,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	AxisIndicator* axisIndicator = nullptr;
 	PrimitiveDrawer* primitiveDrawer = nullptr;
 	GameScene* gameScene = nullptr;
+	Title* title = nullptr;
+	Clear* clear = nullptr;
+
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
@@ -61,6 +66,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	gameScene = new GameScene();
 	gameScene->Initialize();
 
+	//タイトルシーンの初期化
+	title = new Title();
+	title->Initialize();
+
+	// クリアシーンの初期化
+	clear = new Clear();
+	clear->Initialize();
+
+	SceneType sceneNo = SceneType::kTitle;
+
 	// メインループ
 	while (true) {
 		// メッセージ処理
@@ -72,8 +87,40 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		imguiManager->Begin();
 		// 入力関連の毎フレーム処理
 		input->Update();
-		// ゲームシーンの毎フレーム処理
-		gameScene->Update();
+		switch (sceneNo) {
+		case SceneType::kTitle:
+
+			title->Update();
+
+			if (title->IsSceneEnd()) {
+				// 次のシーン値を代入してシーン切り替え
+
+				sceneNo = title->NextScene();
+				title->RoopInitialize();
+			}
+
+			break;
+
+		case SceneType::kGamePlay:
+			gameScene->Update();
+
+			if (gameScene->IsSceneEnd()) {
+				// 次のシーン値を代入してシーン切り替え
+				sceneNo = gameScene->NextScene();
+				gameScene->RoopInitialize();
+			}
+			break;
+
+		case SceneType::kGameClear:
+			clear->Update();
+
+			if (clear->IsSceneEnd()) {
+				// 次のシーン値を代入してシーン切り替え
+				sceneNo = clear->NextScene();
+				clear->RoopInitialize();
+			}
+			break;
+		}
 		// 軸表示の更新
 		axisIndicator->Update();
 		// ImGui受付終了
@@ -81,8 +128,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		// 描画開始
 		dxCommon->PreDraw();
-		// ゲームシーンの描画
-		gameScene->Draw();
+		switch (sceneNo) {
+		case SceneType::kTitle:
+			title->Draw();
+			break;
+		case SceneType::kGamePlay:
+			gameScene->Draw();
+			break;
+		case SceneType::kGameClear:
+			clear->Draw();
+			break;
+	}
 		// 軸表示の描画
 		axisIndicator->Draw();
 		// プリミティブ描画のリセット
