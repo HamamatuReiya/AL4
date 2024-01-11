@@ -94,6 +94,7 @@ void GameScene::Update() {
 	enemy_->Update();
 	debugCamera_->Update();
 	followCamera_->Update();
+	ground_->Update();
 	CheckAllCollisions();
 
 	viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
