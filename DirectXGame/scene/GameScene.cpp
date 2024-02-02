@@ -85,6 +85,10 @@ void GameScene::Initialize() {
 	//地面の初期化
 	ground_->Initialize(modelGround_.get());
 
+	//フェードイン
+	fadeTexHandle_ = TextureManager::Load("fade.png");
+	fadeSprite_ = Sprite::Create(fadeTexHandle_, {0, 0});
+
 
 }
 
@@ -94,6 +98,9 @@ void GameScene::Update() {
 	enemy_->Update();
 	debugCamera_->Update();
 	followCamera_->Update();
+
+	fadeColor_.w -= 0.005f;
+	fadeSprite_->SetColor(fadeColor_);
 
 	viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
 	viewProjection_.matView = followCamera_->GetViewProjection().matView;
@@ -157,6 +164,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
+	fadeSprite_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();

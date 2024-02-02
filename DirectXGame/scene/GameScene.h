@@ -99,6 +99,10 @@ private: // メンバ変数
 	std::unique_ptr<Model> modelEnemyL_arm_;
 	std::unique_ptr<Model> modelEnemyR_arm_;
 
+	uint_fast32_t fadeTexHandle_ = 0;
+	Sprite* fadeSprite_ = nullptr;
+	Vector4 fadeColor_ = {1.0f, 1.0f, 1.0f, 1.0f};
+
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
