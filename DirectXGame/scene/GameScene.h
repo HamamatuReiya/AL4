@@ -113,8 +113,4 @@ private: // メンバ変数
 	std::unique_ptr<Model> modelEnemyR_arm_;
 
 	bool isSceneEnd = false;
-
-	uint32_t fadeTexture_ = 0;
-	Sprite* fadeSprite_ = nullptr;
-	Vector4 fadeColor_ = {1.0f, 1.0f, 1.0f, 1.0f};
 };

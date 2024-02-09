@@ -11,23 +11,9 @@ void Title::Initialize() {
 
 	titleTexture = TextureManager::Load("title2.png");
 	titleSprite_ = Sprite::Create(titleTexture, {0, 0});
-
-	fadeTexture_ = TextureManager::Load("fade.png");
-	fadeSprite_ = Sprite::Create(fadeTexture_, {0, 0}, {1.0f, 1.0f, 1.0f, 0.0f});
 }
 
 void Title::Update() { 
-
-	if (isFade_ == true) {
-		fadeColor_.w += 0.01f;
-	}
-	
-	if (fadeColor_.w >= 1.0f) {
-		isSceneEnd = true;
-		fadeColor_.w = 0.0f;
-		isFade_ = false;
-	}
-	fadeSprite_->SetColor(fadeColor_);
 
 	//ゲームパッドの状態を得る変数
 	XINPUT_STATE joyState;
@@ -35,7 +21,7 @@ void Title::Update() {
 	//ゲームパッド状態取得
 	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
 		if (joyState.Gamepad.wButtons == XINPUT_GAMEPAD_A) {
-			isFade_ = true;
+			isSceneEnd = true;
 		}
 	}
 }
@@ -81,9 +67,7 @@ void Title::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
-
-	fadeSprite_->Draw();
-
+	
 	// スプライト描画後処理
 	Sprite::PostDraw();
 

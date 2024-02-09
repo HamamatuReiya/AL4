@@ -50,9 +50,4 @@ private: // メンバ変数
 	Sprite* titleSprite_ = nullptr;
 
 	bool isSceneEnd = false;
-
-	uint32_t fadeTexture_ = 0;
-	Sprite* fadeSprite_ = nullptr;
-	Vector4 fadeColor_ = {1.0f, 1.0f, 1.0f, 0.0f};
-	bool isFade_ = false;
 };
