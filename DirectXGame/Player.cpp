@@ -1,8 +1,6 @@
 ﻿#include "Player.h"
 #include <cassert>
 
-
-
 void Player::Initialize(const std::vector<Model*>& models) {
 	BaseCharacter::Initialize(models);
 
@@ -148,7 +146,12 @@ void Player::BehaviorRootUpdate() {
 
 	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
 		// 速さ
-		const float speed = 0.3f;
+
+		float speed = 0.3f;
+
+		if (joyState.Gamepad.wButtons == XINPUT_GAMEPAD_RIGHT_SHOULDER) {
+			speed = 0.6f;
+		}
 		
 		// 移動量
 		Vector3 move = {
