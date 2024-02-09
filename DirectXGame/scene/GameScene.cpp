@@ -60,7 +60,7 @@ void GameScene::Initialize() {
 	// 敵の生成
 	enemy_ = std::make_unique<Enemy>();
 	// 3Dモデルの生成
-	modelEnemyBody_.reset(Model::CreateFromOBJ("needle_Body", true));
+	modelEnemyBody_.reset(Model::CreateFromOBJ("enemy2", true));
 	// 3Dモデルの生成
 	modelEnemyL_arm_.reset(Model::CreateFromOBJ("needle_L_arm", true));
 	// 3Dモデルの生成
@@ -85,17 +85,25 @@ void GameScene::Initialize() {
 	//地面の初期化
 	ground_->Initialize(modelGround_.get());
 
+	fadeTexture_ = TextureManager::Load("fade.png");
+	fadeSprite_ = Sprite::Create(fadeTexture_, {0, 0});
 
 }
 
 void GameScene::Update() {
 	
-	player_->Update();
-	enemy_->Update();
+	fadeColor_.w -= 0.01f;
+	if (fadeColor_.w <= 0.0f) {
+		fadeColor_.w = 0.0f;
+		player_->Update();
+		enemy_->Update();
+		CheckAllCollisions();
+	}
+
 	debugCamera_->Update();
 	followCamera_->Update();
 	ground_->Update();
-	CheckAllCollisions();
+	fadeSprite_->SetColor(fadeColor_);
 
 	viewProjection_.matProjection = followCamera_->GetViewProjection().matProjection;
 	viewProjection_.matView = followCamera_->GetViewProjection().matView;
@@ -143,8 +151,10 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 	//model_->Draw(worldTransform_, viewProjection_, textureHandle_);
-	player_->Draw(viewProjection_);
-	enemy_->Draw(viewProjection_);
+	if (fadeColor_.w <= 0.0f) {
+		player_->Draw(viewProjection_);
+		enemy_->Draw(viewProjection_);
+	}
 	skydome_->Draw(viewProjection_);
 	ground_->Draw(viewProjection_);
 
@@ -159,6 +169,8 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
+
+	fadeSprite_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -206,5 +218,7 @@ void GameScene::CheckAllCollisions() {
 void GameScene::RoopInitialize() { 
 	player_->RoopInitialize();
 	enemy_->RoopInitialize();
+	followCamera_->Initialize();
 	isSceneEnd = false;
+	fadeColor_.w = 1.0f;
 }

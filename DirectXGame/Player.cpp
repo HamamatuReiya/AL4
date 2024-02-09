@@ -115,7 +115,7 @@ void Player::UpdateFloatingGimmick()
 	floatingParameter_ = std::fmod(floatingParameter_, 2.0f * (float)M_PI);
 
 	// 浮遊の幅<m>
-	const float floating = 0.125f;
+	const float floating = 0.25f;
 	// 浮遊の座標を反映
 	worldTransform_.translation_.y = std::sin(floatingParameter_) * floating;
 }

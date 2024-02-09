@@ -50,6 +50,9 @@ public: // メンバ関数
 
 	void CheckAllCollisions();
 
+	/// <summary>
+	/// ゲームシーン用
+	/// </summary>
 	bool IsSceneEnd() { return isSceneEnd; }
 	SceneType NextScene() { return SceneType::kGameClear; }
 
@@ -111,7 +114,7 @@ private: // メンバ変数
 
 	bool isSceneEnd = false;
 
-	/// <summary>
-	/// ゲームシーン用
-	/// </summary>
+	uint32_t fadeTexture_ = 0;
+	Sprite* fadeSprite_ = nullptr;
+	Vector4 fadeColor_ = {1.0f, 1.0f, 1.0f, 1.0f};
 };

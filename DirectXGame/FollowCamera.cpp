@@ -6,6 +6,8 @@ void FollowCamera::Initialize() {
 	worldTransform_.Initialize();
 	viewProjection_.Initialize();
 
+	viewProjection_.rotation_.y = 0.0f;
+
 }
 
 void FollowCamera::Update() 

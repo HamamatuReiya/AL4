@@ -50,8 +50,8 @@ void Enemy::Update() {
 void Enemy::Draw(const ViewProjection& viewProjection) {
 	// 3Dモデル描画
 	models_[0]->Draw(worldTransformBody_, viewProjection);
-	models_[1]->Draw(worldTransformL_arm_, viewProjection);
-	models_[2]->Draw(worldTransformR_arm_, viewProjection);
+	//models_[1]->Draw(worldTransformL_arm_, viewProjection);
+	//models_[2]->Draw(worldTransformR_arm_, viewProjection);
 }
 
 Vector3 Enemy::GetWorldPosition() {
