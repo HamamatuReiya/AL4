@@ -48,6 +48,8 @@ private: // メンバ変数
 
 	uint32_t titleTexture = 0;
 	Sprite* titleSprite_ = nullptr;
+	Vector2 titleMove_ = {0.0f, -10.0f};
+	float titleSpeed_ = 1.0f;
 
 	bool isSceneEnd = false;
 
@@ -55,4 +57,8 @@ private: // メンバ変数
 	Sprite* fadeSprite_ = nullptr;
 	Vector4 fadeColor_ = {1.0f, 1.0f, 1.0f, 0.0f};
 	bool isFade_ = false;
+
+	uint32_t backgroundTexture_ = 0;
+	Sprite* backgroundSprite_ = nullptr;
+	
 };
